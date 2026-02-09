@@ -13,7 +13,7 @@ const AdminProducts = () => {
     useEffect(() => {
         const fetchProducts = async () => {
             try {
-                const { data } = await axios.get('http://localhost:5001/api/products');
+                const { data } = await axios.get(`${import.meta.env.VITE_API_URL}/api/products`);
                 setProducts(data);
             } catch (error) {
                 console.error(error);
@@ -28,7 +28,7 @@ const AdminProducts = () => {
             const config = {
                 headers: { Authorization: `Bearer ${user.token}` },
             };
-            const { data } = await axios.post('http://localhost:5001/api/products', {}, config);
+            const { data } = await axios.post(`${import.meta.env.VITE_API_URL}/api/products`, {}, config);
             navigate(`/admin/product/${data._id}/edit`);
         } catch (error) {
             alert('Error creating product');
@@ -41,7 +41,7 @@ const AdminProducts = () => {
             const config = {
                 headers: { Authorization: `Bearer ${user.token}` },
             };
-            await axios.delete(`http://localhost:5001/api/products/${id}`, config);
+            await axios.delete(`${import.meta.env.VITE_API_URL}/api/products/${id}`, config);
             setProducts(products.filter(p => p._id !== id));
         } catch (error) {
             alert('Error deleting product');

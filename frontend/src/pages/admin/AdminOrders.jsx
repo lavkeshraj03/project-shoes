@@ -13,7 +13,7 @@ const AdminOrders = () => {
                 const config = {
                     headers: { Authorization: `Bearer ${user.token}` },
                 };
-                const { data } = await axios.get('http://localhost:5001/api/orders', config);
+                const { data } = await axios.get(`${import.meta.env.VITE_API_URL}/api/orders`, config);
                 setOrders(data);
             } catch (error) {
                 console.error(error);
@@ -27,9 +27,9 @@ const AdminOrders = () => {
             const config = {
                 headers: { Authorization: `Bearer ${user.token}` },
             };
-            await axios.put(`http://localhost:5001/api/orders/${id}/deliver`, {}, config);
+            await axios.put(`${import.meta.env.VITE_API_URL}/api/orders/${id}/deliver`, {}, config);
             // Refresh
-            const { data } = await axios.get('http://localhost:5001/api/orders', config);
+            const { data } = await axios.get(`${import.meta.env.VITE_API_URL}/api/orders`, config);
             setOrders(data);
             alert('Order marked as delivered');
         } catch (error) {

@@ -22,7 +22,7 @@ const ProductEditPage = () => {
     useEffect(() => {
         const fetchProduct = async () => {
             try {
-                const { data } = await axios.get(`http://localhost:5001/api/products/${id}`);
+                const { data } = await axios.get(`${import.meta.env.VITE_API_URL}/api/products/${id}`);
                 setName(data.name);
                 setPrice(data.price);
                 setImage(data.image);
@@ -51,7 +51,7 @@ const ProductEditPage = () => {
             };
 
             await axios.put(
-                `http://localhost:5001/api/products/${id}`,
+                `${import.meta.env.VITE_API_URL}/api/products/${id}`,
                 {
                     name,
                     price,

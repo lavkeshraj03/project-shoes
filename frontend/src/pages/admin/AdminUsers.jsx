@@ -14,7 +14,7 @@ const AdminUsers = () => {
                 const config = {
                     headers: { Authorization: `Bearer ${user.token}` },
                 };
-                const { data } = await axios.get('http://localhost:5001/api/users', config);
+                const { data } = await axios.get(`${import.meta.env.VITE_API_URL}/api/users`, config);
                 setUsers(data);
             } catch (error) {
                 console.error(error);
@@ -29,7 +29,7 @@ const AdminUsers = () => {
             const config = {
                 headers: { Authorization: `Bearer ${user.token}` },
             };
-            await axios.delete(`http://localhost:5001/api/users/${id}`, config);
+            await axios.delete(`${import.meta.env.VITE_API_URL}/api/users/${id}`, config);
             setUsers(users.filter(u => u._id !== id));
         } catch (error) {
             alert('Error deleting user');

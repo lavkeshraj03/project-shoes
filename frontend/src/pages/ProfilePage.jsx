@@ -14,7 +14,7 @@ const ProfilePage = () => {
                         Authorization: `Bearer ${user.token}`,
                     },
                 };
-                const { data } = await axios.get('http://localhost:5001/api/orders/myorders', config);
+                const { data } = await axios.get(`${import.meta.env.VITE_API_URL}/api/orders/myorders`, config);
                 setOrders(data);
             } catch (error) {
                 console.error(error);

@@ -14,7 +14,7 @@ const ShopPage = () => {
     useEffect(() => {
         const fetchProducts = async () => {
             try {
-                const { data } = await axios.get('http://localhost:5001/api/products');
+                const { data } = await axios.get(`${import.meta.env.VITE_API_URL}/api/products`);
                 setProducts(data);
                 setFilteredProducts(data);
             } catch (error) {

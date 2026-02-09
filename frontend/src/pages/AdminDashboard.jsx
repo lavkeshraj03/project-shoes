@@ -22,9 +22,9 @@ const AdminDashboard = () => {
                     headers: { Authorization: `Bearer ${user.token}` },
                 };
 
-                const { data: productsData } = await axios.get('http://localhost:5001/api/products');
-                const { data: ordersData } = await axios.get('http://localhost:5001/api/orders', config);
-                const { data: usersData } = await axios.get('http://localhost:5001/api/users', config);
+                const { data: productsData } = await axios.get(`${import.meta.env.VITE_API_URL}/api/products`);
+                const { data: ordersData } = await axios.get(`${import.meta.env.VITE_API_URL}/api/orders`, config);
+                const { data: usersData } = await axios.get(`${import.meta.env.VITE_API_URL}/api/users`, config);
 
                 // Calculate Stats
                 const totalSales = ordersData.reduce((acc, order) => acc + (order.isPaid ? order.totalPrice : 0), 0);

@@ -46,7 +46,7 @@ const CheckoutPage = () => {
 
             // We create the Razorpay order first to get ID
             const { data: razorpayOrder } = await axios.post(
-                'http://localhost:5001/api/payment/create-order',
+                `${import.meta.env.VITE_API_URL}/api/payment/create-order`,
                 { amount: totalPrice },
                 config
             );
@@ -63,7 +63,7 @@ const CheckoutPage = () => {
                     // 3. Verify Payment and Create Order in DB
                     try {
                         await axios.post(
-                            'http://localhost:5001/api/payment/verify-payment',
+                            `${import.meta.env.VITE_API_URL}/api/payment/verify-payment`,
                             {
                                 razorpay_order_id: response.razorpay_order_id,
                                 razorpay_payment_id: response.razorpay_payment_id,
@@ -89,7 +89,7 @@ const CheckoutPage = () => {
                             },
                         };
 
-                        await axios.post('http://localhost:5001/api/orders', orderData, config);
+                        await axios.post(`${import.meta.env.VITE_API_URL}/api/orders`, orderData, config);
 
                         clearCart();
                         navigate('/profile');
