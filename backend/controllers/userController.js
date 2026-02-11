@@ -6,7 +6,9 @@ const User = require('../models/User');
 // @route   POST /api/users/login
 // @access  Public
 const authUser = asyncHandler(async (req, res) => {
-    const { email, password } = req.body;
+    let { email, password } = req.body;
+
+    email = email.trim();
 
     const user = await User.findOne({ email });
 
@@ -28,7 +30,9 @@ const authUser = asyncHandler(async (req, res) => {
 // @route   POST /api/users
 // @access  Public
 const registerUser = asyncHandler(async (req, res) => {
-    const { name, email, password } = req.body;
+    let { name, email, password } = req.body;
+
+    email = email.trim();
 
     const userExists = await User.findOne({ email });
 

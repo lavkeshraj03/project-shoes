@@ -22,7 +22,7 @@ const LoginPage = () => {
     const submitHandler = async (e) => {
         e.preventDefault();
         try {
-            await login(email, password);
+            await login(email.trim(), password);
         } catch (error) {
             alert('Invalid credentials'); // Replace with better error handling
         }

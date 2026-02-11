@@ -8,36 +8,38 @@ export const AuthProvider = ({ children }) => {
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        try {
-            const userInfo = JSON.parse(localStorage.getItem('userInfo'));
-            if (userInfo) {
-                setUser(userInfo);
+        if (typeof window !== 'undefined') {
+            try {
+                const userInfo = localStorage.getItem('userInfo');
+                if (userInfo) {
+                    setUser(JSON.parse(userInfo));
+                }
+            } catch (error) {
+                console.error("Failed to parse user info:", error);
+                localStorage.removeItem('userInfo');
             }
-        } catch (error) {
-            console.error("Failed to parse user info:", error);
-            localStorage.removeItem('userInfo');
         }
         setLoading(false);
     }, []);
 
     const login = async (email, password) => {
-        const { data } = await axios.post(`${import.meta.env.VITE_API_URL}/api/users/login`, {
-            email,
-            password,
-        });
+        const { data } = await axios.post(
+            `${import.meta.env.VITE_API_URL}/api/users/login`,
+            { email, password }
+        );
         setUser(data);
         localStorage.setItem('userInfo', JSON.stringify(data));
         return data;
     };
 
     const register = async (name, email, password) => {
-        const { data } = await axios.post(`${import.meta.env.VITE_API_URL}/api/users`, {
-            name,
-            email,
-            password,
-        });
+        const { data } = await axios.post(
+            `${import.meta.env.VITE_API_URL}/api/users`,
+            { name, email, password }
+        );
         setUser(data);
         localStorage.setItem('userInfo', JSON.stringify(data));
+        return data;
     };
 
     const logout = () => {
@@ -45,8 +47,13 @@ export const AuthProvider = ({ children }) => {
         setUser(null);
     };
 
+    // 🔴 CRITICAL: block render until auth check finishes
+    if (loading) {
+        return null; // or a spinner if you want
+    }
+
     return (
-        <AuthContext.Provider value={{ user, login, register, logout, loading }}>
+        <AuthContext.Provider value={{ user, login, register, logout }}>
             {children}
         </AuthContext.Provider>
     );

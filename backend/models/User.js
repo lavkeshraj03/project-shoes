@@ -9,7 +9,9 @@ const userSchema = mongoose.Schema({
     email: {
         type: String,
         required: true,
-        unique: true
+        unique: true,
+        trim: true,
+        lowercase: true
     },
     password: {
         type: String,
@@ -40,6 +42,6 @@ userSchema.pre('save', async function (next) {
 });
 
 const User =
-  mongoose.models.User || mongoose.model("User", userSchema);
+    mongoose.models.User || mongoose.model("User", userSchema);
 
 module.exports = User;
